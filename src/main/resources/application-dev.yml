@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+
+  thymeleaf:
+    cache: false
+
+  datasource:
+    hikari:
+      ## com.mysql.cj.jdbc.Driver
+      driver-class-name: com.mysql.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/bala?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8
+      username: root
+      password: root
+      maximum-pool-size: 20
+      minimum-idle: 5
+      pool-name: hikariPool
+      connection-test-query: SELECT 1
+
+  redis:
+    host: localhost
+    password:
+    port: 6379
+    database: 0
