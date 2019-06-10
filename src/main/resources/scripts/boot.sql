@@ -35,7 +35,29 @@ CREATE TABLE `sys_role` (
 
 drop table if exists sys_user_role;
 CREATE TABLE `sys_user_role` (
-  `user_id` varchar(32) NOT NULL COMMENT '用户id',
-  `role_id` varchar(32) NOT NULL COMMENT '角色id',
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `role_id` int(11) NOT NULL COMMENT '角色id',
   PRIMARY KEY (`role_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关系表';
+
+drop table if exists sys_resource;
+CREATE TABLE `sys_resource` (
+  `resource_id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) COMMENT '父资源id',
+  `name` varchar(64) COMMENT '资源名称',
+  `url` varchar(255) COMMENT '菜单链接',
+  `icon` varchar(64) COMMENT '菜单图标',
+  `sort` int(11) COMMENT '排序',
+  `permission` varchar(64) COMMENT '权限标识',
+  `remark` varchar(255) COMMENT '备注',
+  `type` varchar(32) COMMENT '资源类型',
+  PRIMARY KEY (`resource_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源表';
+
+DROP TABLE IF EXISTS `sys_role_resource`;
+CREATE TABLE `sys_role_resource` (
+  `role_id` int(11) NOT NULL COMMENT '角色id',
+  `resource_id` int(11) NOT NULL COMMENT '资源id',
+  PRIMARY KEY (`resource_id`,`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色资源表';
+
