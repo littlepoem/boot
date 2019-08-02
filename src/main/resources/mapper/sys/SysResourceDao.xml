@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pw.boot.modules.sys.dao.SysResourceDao">
+
+
+    <resultMap type="com.pw.boot.modules.sys.entity.SysResourceEntity" id="sysResourceMap">
+        <result property="resourceId" column="resource_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="name" column="name"/>
+        <result property="url" column="url"/>
+        <result property="icon" column="icon"/>
+        <result property="sort" column="sort"/>
+        <result property="permission" column="permission"/>
+        <result property="remark" column="remark"/>
+        <result property="type" column="type"/>
+    </resultMap>
+
+
+    <select id="queryAllList" resultType="com.pw.boot.modules.sys.entity.SysResourceEntity" resultMap="sysResourceMap">
+        select
+            *
+        from sys_resource
+    </select>
+
+    <select id="queryListByUserId" resultType="com.pw.boot.modules.sys.entity.SysResourceEntity" resultMap="sysResourceMap">
+        select
+            t.*
+        from sys_resource t
+        left join sys_role_resource srr on srr.resource_id = t.resource_id
+        left join sys_role_user sru on sru.role_id = srr.role_id
+        where sru.user_id=#{userId}
+    </select>
+
+</mapper>

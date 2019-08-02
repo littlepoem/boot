@@ -6,7 +6,7 @@ use boot;
 
 drop table if exists sys_user;
 CREATE TABLE `sys_user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(16) NOT NULL,
   `user_name` varchar(32) COMMENT '用户名',
   `phone` varchar(32) COMMENT '手机号码',
   `email` varchar(64) COMMENT '邮箱',
@@ -25,7 +25,7 @@ CREATE TABLE `sys_user` (
 
 drop table if exists sys_role;
 CREATE TABLE `sys_role` (
-  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` bigint(16) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(32) COMMENT '角色编码',
   `nickname` varchar(32) COMMENT '角色名，显示用',
   `description` varchar(64) COMMENT '描述',
@@ -33,17 +33,17 @@ CREATE TABLE `sys_role` (
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
 
-drop table if exists sys_user_role;
-CREATE TABLE `sys_user_role` (
-  `user_id` int(11) NOT NULL COMMENT '用户id',
-  `role_id` int(11) NOT NULL COMMENT '角色id',
+drop table if exists sys_role_user;
+CREATE TABLE `sys_role_user` (
+  `user_id` bigint(16) NOT NULL COMMENT '用户id',
+  `role_id` bigint(16) NOT NULL COMMENT '角色id',
   PRIMARY KEY (`role_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关系表';
 
 drop table if exists sys_resource;
 CREATE TABLE `sys_resource` (
-  `resource_id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) COMMENT '父资源id',
+  `resource_id` bigint(16) NOT NULL,
+  `parent_id` bigint(16) COMMENT '父资源id',
   `name` varchar(64) COMMENT '资源名称',
   `url` varchar(255) COMMENT '菜单链接',
   `icon` varchar(64) COMMENT '菜单图标',
@@ -56,8 +56,8 @@ CREATE TABLE `sys_resource` (
 
 DROP TABLE IF EXISTS `sys_role_resource`;
 CREATE TABLE `sys_role_resource` (
-  `role_id` int(11) NOT NULL COMMENT '角色id',
-  `resource_id` int(11) NOT NULL COMMENT '资源id',
+  `role_id` bigint(16) NOT NULL COMMENT '角色id',
+  `resource_id` bigint(16) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`resource_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色资源表';
 

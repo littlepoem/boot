@@ -7,7 +7,7 @@ package com.pw.boot.modules.sys.entity;
  */
 public class SysUserEntity {
 
-    private Integer userId;
+    private long userId;
     private String userName;
     private String phone;
     private String email;
@@ -22,11 +22,11 @@ public class SysUserEntity {
     private String createTime;
     private String status;
 
-    public Integer getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

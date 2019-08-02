@@ -5,7 +5,7 @@ package com.pw.boot.modules.sys.entity;
  * @author: hjc
  * @create: 2019-06-10
  */
-public class SysUserRoleEntity {
+public class SysRoleUserEntity {
 
     private Integer userId;
     private Integer roleId;

@@ -4,7 +4,7 @@
 <mapper namespace="com.pw.boot.modules.sys.dao.SysUserRoleDao">
 
 
-    <resultMap type="com.pw.boot.modules.sys.entity.SysUserRoleEntity" id="sysUserRoleMap">
+    <resultMap type="com.pw.boot.modules.sys.entity.SysRoleUserEntity" id="sysUserRoleMap">
         <result property="userId" column="user_id"/>
         <result property="roleId" column="role_id"/>
     </resultMap>

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
  * @author: hjc
@@ -20,10 +21,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private CustomAccessDeniedHandler customAccessDeniedHandler;
+    private CustomFilterSecurityInterceptor customFilterSecurityInterceptor;
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
+
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -38,23 +55,12 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/images/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
-                    .loginPage("/login").permitAll()
-                    .failureForwardUrl("/?error=true")
+                    .loginPage("/login").failureUrl("/login?error").permitAll()
+//                    .failureForwardUrl("/?error=true")
                     .defaultSuccessUrl("/index")
                 .and().logout().permitAll()
                 .and().exceptionHandling().accessDeniedHandler(customAccessDeniedHandler);
-    }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.userDetailsService(customUserDetailsService)
-        .passwordEncoder(passwordEncoder());
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-
-        return new BCryptPasswordEncoder();
+        httpSecurity.addFilterBefore(customFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }
 }
