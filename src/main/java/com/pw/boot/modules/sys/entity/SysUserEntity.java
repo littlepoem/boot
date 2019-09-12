@@ -1,5 +1,7 @@
 package com.pw.boot.modules.sys.entity;
 
+import java.util.Date;
+
 /**
  * @author: hjc
  * @description:
@@ -19,8 +21,7 @@ public class SysUserEntity {
     private String birthday;
     private String gender;
     private String avatar;
-    private String createTime;
-    private String status;
+    private Date createTime;
 
     public long getUserId() {
         return userId;
@@ -118,19 +119,11 @@ public class SysUserEntity {
         this.avatar = avatar;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

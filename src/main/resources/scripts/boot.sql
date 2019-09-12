@@ -19,7 +19,6 @@ CREATE TABLE `sys_user` (
   `gender` varchar(2) COMMENT '性别',
   `avatar` varchar(255) COMMENT '头像',
   `create_time` datetime,
-  `status` varchar(8) COMMENT 'status',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
@@ -29,7 +28,6 @@ CREATE TABLE `sys_role` (
   `role_name` varchar(32) COMMENT '角色编码',
   `nickname` varchar(32) COMMENT '角色名，显示用',
   `description` varchar(64) COMMENT '描述',
-  `status` varchar(8) COMMENT 'status',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
 

@@ -16,7 +16,7 @@ public class IndexController {
      *
      * @return
      */
-    @RequestMapping("/")
+//    @RequestMapping("/")
     public ModelAndView index(){
 
         return new ModelAndView("index.html");

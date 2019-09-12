@@ -18,9 +18,66 @@
         <result property="gender" column="gender"/>
         <result property="avatar" column="avatar"/>
         <result property="createTime" column="create_time"/>
-        <result property="status" column="status"/>
     </resultMap>
 
+    <select id="queryList" resultType="com.pw.boot.modules.sys.entity.SysUserEntity" resultMap="sysUserMap">
+        select
+            *
+        from sys_user
+        order by user_id desc
+    </select>
+
+    <select id="queryObject" resultType="com.pw.boot.modules.sys.entity.SysUserEntity" resultMap="sysUserMap">
+        select
+            *
+        from sys_user
+        where user_id = #{value}
+        limit 1
+    </select>
+
+    <insert id="save" parameterType="com.pw.boot.modules.sys.entity.SysUserEntity">
+		insert into sys_user(
+		    user_id,
+		    user_name,
+		    phone,
+		    email,
+		    openid,
+		    nickname,
+		    realname,
+		    idcard,
+		    password,
+		    birthday,
+		    gender,
+		    avatar,
+		    create_time) values(
+            #{userId},
+            #{userName},
+            #{phone},
+            #{email},
+            #{openid},
+            #{nickname},
+            #{realname},
+            #{idcard},
+            #{password},
+            #{birthday},
+            #{gender},
+            #{avatar},
+            #{createTime}
+        )
+	</insert>
+
+    <update id="update" parameterType="com.pw.boot.modules.sys.entity.SysUserEntity">
+        update sys_user
+        <set>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="realname != null">realname = #{realname},</if>
+            <if test="idcard != null">idcard = #{idcard},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="gender != null">gender = #{gender}</if>
+        </set>
+        where user_id = #{userId}
+    </update>
 
     <select id="queryByUserName" resultType="com.pw.boot.modules.sys.entity.SysUserEntity" resultMap="sysUserMap">
         select

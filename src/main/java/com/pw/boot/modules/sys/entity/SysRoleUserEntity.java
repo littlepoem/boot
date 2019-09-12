@@ -7,22 +7,22 @@ package com.pw.boot.modules.sys.entity;
  */
 public class SysRoleUserEntity {
 
-    private Integer userId;
-    private Integer roleId;
+    private long userId;
+    private long roleId;
 
-    public Integer getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public Integer getRoleId() {
+    public long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(long roleId) {
         this.roleId = roleId;
     }
 }

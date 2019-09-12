@@ -7,17 +7,16 @@ package com.pw.boot.modules.sys.entity;
  */
 public class SysRoleEntity {
 
-    private Integer roleId;
+    private long roleId;
     private String roleName;
     private String nickname;
     private String description;
-    private String status;
 
-    public Integer getRoleId() {
+    public long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(long roleId) {
         this.roleId = roleId;
     }
 
@@ -43,13 +42,5 @@ public class SysRoleEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

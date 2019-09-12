@@ -7,7 +7,7 @@ package com.pw.boot.modules.sys.entity;
  */
 public class SysResourceEntity {
 
-    private Integer resourceId;
+    private long resourceId;
     private String parentId;
     private String name;
     private String url;
@@ -17,11 +17,11 @@ public class SysResourceEntity {
     private String remark;
     private String type;
 
-    public Integer getResourceId() {
+    public long getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(Integer resourceId) {
+    public void setResourceId(long resourceId) {
         this.resourceId = resourceId;
     }
 
