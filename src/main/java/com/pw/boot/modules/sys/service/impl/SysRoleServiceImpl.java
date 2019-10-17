@@ -48,12 +48,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     /**
      * 根据角色编码查询
-     * @param roleName
+     * @param roleCode
      * @return
      */
-    public SysRoleEntity queryByRoleName(String roleName){
+    public SysRoleEntity queryByRoleCode(String roleCode){
 
-        return sysRoleDao.queryByRoleName(roleName);
+        return sysRoleDao.queryByRoleCode(roleCode);
     }
 
     /**

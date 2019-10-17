@@ -9,7 +9,7 @@ public class SysRoleEntity {
 
     private long roleId;
     private String roleName;
-    private String nickname;
+    private String roleCode;
     private String description;
 
     public long getRoleId() {
@@ -28,12 +28,12 @@ public class SysRoleEntity {
         this.roleName = roleName;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getRoleCode() {
+        return roleCode;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
     public String getDescription() {

@@ -7,7 +7,7 @@
     <resultMap type="com.pw.boot.modules.sys.entity.SysRoleEntity" id="sysRoleMap">
         <result property="roleId" column="role_id"/>
         <result property="roleName" column="role_name"/>
-        <result property="nickname" column="nickname"/>
+        <result property="roleCode" column="role_code"/>
         <result property="description" column="description"/>
     </resultMap>
 
@@ -48,11 +48,11 @@
 		delete from sys_role where role_id = #{value}
 	</delete>
 
-    <select id="queryByRoleName" resultType="com.pw.boot.modules.sys.entity.SysRoleEntity" resultMap="sysRoleMap">
+    <select id="queryByRoleCode" resultType="com.pw.boot.modules.sys.entity.SysRoleEntity" resultMap="sysRoleMap">
         select
             *
         from sys_role
-        where role_name = #{roleName}
+        where role_code = #{roleCode}
         limit 1
     </select>
 </mapper>

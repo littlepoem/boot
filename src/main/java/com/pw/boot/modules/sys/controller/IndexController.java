@@ -10,13 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
  * @create: 2019-06-05
  */
 @Controller
+@RequestMapping("/")
 public class IndexController {
 
     /**
      *
      * @return
      */
-//    @RequestMapping("/")
+    @RequestMapping("/")
     public ModelAndView index(){
 
         return new ModelAndView("index.html");

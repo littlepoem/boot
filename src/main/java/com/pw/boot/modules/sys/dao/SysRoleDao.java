@@ -13,5 +13,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface SysRoleDao extends BaseDao<SysRoleEntity> {
 
-    SysRoleEntity queryByRoleName(@Param("roleName")String roleName);
+    SysRoleEntity queryByRoleCode(@Param("roleCode")String roleCode);
 }

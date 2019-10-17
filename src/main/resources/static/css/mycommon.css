@@ -1,0 +1,46 @@
+legend {
+    display: block;
+    padding: 0;
+    width: auto;
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: inherit;
+    color: #333333;
+    border: 0;
+}
+.div-width200{
+    width : 200px;
+}
+
+.console-refresh{
+    position: absolute;
+    cursor: pointer;
+    z-index: 19940201;
+    color: white;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    background-color: #1AA094;
+    line-height: 30px;
+}
+
+.moreBtn{
+    position: absolute;
+    cursor: pointer;
+    z-index: 19940201;
+    color: white;
+    text-align: center;
+    width: 80px;
+    height: 30px;
+    background-color: #1AA094;
+    line-height: 30px;
+    float: right;
+    left: 85%;
+    top: -8%;
+    font-size: 15px;
+}
+
+.listcount{
+    text-decoration:underline;
+    color:red
+}

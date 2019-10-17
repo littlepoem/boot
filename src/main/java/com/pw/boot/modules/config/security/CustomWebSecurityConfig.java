@@ -48,11 +48,12 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
-//                        "/",
+                        "/",
                         "/js/**",
                         "/css/**",
                         "/fonts/**",
-                        "/images/**").permitAll()
+                        "/images/**",
+                        "/login/captcha").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
                     .loginPage("/login").failureUrl("/login?error").permitAll()

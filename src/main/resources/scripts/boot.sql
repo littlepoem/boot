@@ -25,8 +25,8 @@ CREATE TABLE `sys_user` (
 drop table if exists sys_role;
 CREATE TABLE `sys_role` (
   `role_id` bigint(16) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(32) COMMENT '角色编码',
-  `nickname` varchar(32) COMMENT '角色名，显示用',
+  `role_name` varchar(32) COMMENT '角色名，显示用',
+  `role_code` varchar(32) COMMENT '角色编码',
   `description` varchar(64) COMMENT '描述',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
