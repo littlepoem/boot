@@ -30,10 +30,17 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomAccessDeniedHandler customAccessDeniedHandler;
 
 
+    /**
+     * 配置认证服务
+     * @param authenticationManagerBuilder 生成 AuthenticationManager
+     * @throws Exception
+     */
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 
-        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+        authenticationManagerBuilder
+                .userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -42,17 +49,28 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * 配置拦截器
+     * @param httpSecurity
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        //允许iframe
+        httpSecurity.headers().frameOptions().disable();
+        //关闭csrf保护
+        httpSecurity.csrf().disable();
+
         httpSecurity
-                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
                         "/",
-                        "/js/**",
                         "/css/**",
                         "/fonts/**",
                         "/images/**",
+                        "/js/**",
+                        "/plugins/**",
+                        "/swagger/**",
                         "/login/captcha").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()

@@ -18,8 +18,14 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/")
-    public ModelAndView index(){
+    public ModelAndView root(){
 
-        return new ModelAndView("index.html");
+        return new ModelAndView("redirect:/login");
+    }
+
+    @RequestMapping("/index")
+    public String index(){
+
+        return "index.html";
     }
 }

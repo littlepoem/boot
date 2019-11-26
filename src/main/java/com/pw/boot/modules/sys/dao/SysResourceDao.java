@@ -15,7 +15,9 @@ import java.util.List;
 @Mapper
 public interface SysResourceDao extends BaseDao<SysResourceEntity> {
 
-    List<SysResourceEntity> queryAllList();
+    List<SysResourceEntity> queryAuthItemList();
+
+    List<SysResourceEntity> queryListByParentId(@Param("parentId")long parentId);
 
     List<SysResourceEntity> queryListByUserId(@Param("userId")long userId);
 }

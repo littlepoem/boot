@@ -7,7 +7,7 @@
     <meta content="text/html;charset=UTF-8"/>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/font-awesome.css}" />
+    <link rel="stylesheet" th:href="@{/css/font-awesome.css}" />
     <link rel="stylesheet" th:href="@{/css/AdminLTE.min.css}" />
     <link rel="stylesheet" th:href="@{/css/all-skins.min.css}" />
     <link rel="stylesheet" th:href="@{/css/main.css}" />
@@ -16,34 +16,31 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box" id="rrapp" style="margin-top: 12%" v-cloak>
-    <div class="login-box-body">
-        <p class="login-box-msg" style="font-size: 25px;font-weight:bold">对账管理系统</p>
-        <div v-if="error" class="alert alert-danger alert-dismissible">
-            <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle"></i> {{errorMsg}}</h4>
-        </div>
-        <div class="form-group has-feedback">
-            <input type="text" class="form-control" v-model="username" placeholder="账号">
-            <span class="fa fa-user form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-            <input type="password" class="form-control" v-model="password" placeholder="密码">
-            <span class="fa fa-lock form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-            <input type="text"style="width: 50%;display: inline-block" class="form-control" v-model="captcha" @keyup.enter="login" placeholder="验证码">
-            <img alt="如果看不清楚，请单击图片刷新！" style="width: 45%;display: inline-block" class="pointer" :src="src" @click="refreshCode">
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"  name="isRememberMe" v-model="isRememberMe">记住我,下次免登陆
-            </label>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <button type="button" class="btn btn-block btn-success btn-lg" @click="login">登录</button>
+    <form action="/boot/login" method="post">
+        <div class="login-box-body">
+            <p class="login-box-msg" style="font-size: 25px;font-weight:bold">对账管理系统</p>
+            <div v-if="error" class="alert alert-danger alert-dismissible">
+                <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle"></i> {{errorMsg}}</h4>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" name="username" placeholder="账号">
+                <span class="fa fa-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" name="password" placeholder="密码">
+                <span class="fa fa-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text"style="width: 50%;display: inline-block" class="form-control" v-model="captcha" @keyup.enter="login" placeholder="验证码">
+                <img alt="如果看不清楚，请单击图片刷新！" style="width: 45%;display: inline-block" class="pointer" :src="src" @click="refreshCode">
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <input type="submit" class="btn btn-block btn-success btn-lg" value="登录">
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/vue.min.js}"></script>
@@ -60,7 +57,6 @@
             captcha: '',
             error: false,
             errorMsg: '',
-            isRememberMe:false,
             src: 'login/captcha'
         },
         beforeCreate: function(){
@@ -71,24 +67,6 @@
         methods: {
             refreshCode: function(){
                 this.src = "login/captcha?t=" + $.now();
-            },
-            login: function (event) {
-                var data = "username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha+"&isRememberMe="+vm.isRememberMe;
-                $.ajax({
-                    type: "POST",
-                    url: "login/login",
-                    data: data,
-                    dataType: "json",
-                    success: function(result){
-                        if(result.code == 0){//登录成功
-                            parent.location.href ='index1.html';
-                        }else{
-                            vm.error = true;
-                            vm.errorMsg = result.msg;
-                            vm.refreshCode();
-                        }
-                    }
-                });
             }
         }
     });

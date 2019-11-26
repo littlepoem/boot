@@ -84,7 +84,6 @@
             *
         from sys_user
         where user_name = #{userName}
-          and status = '1'
         limit 1
     </select>
 

@@ -37,18 +37,20 @@ public class CustomUserDetailsService implements UserDetailsService {
         SysUserEntity user = sysUserService.queryByUserName(username);
         if (user != null) {
             List<SysResourceEntity> resources = sysResourceService.queryListByUserId(user.getUserId());
+            /**
+             * grantedAuthorities 存放用户具备的权限
+              */
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
             for (SysResourceEntity resource : resources) {
                 if (resource != null && resource.getPermission()!=null) {
 
                     GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(resource.getPermission());
-                    //1：此处将权限信息添加到 GrantedAuthority 对象中，在后面进行全权限验证时会使用GrantedAuthority 对象。
                     grantedAuthorities.add(grantedAuthority);
                 }
             }
             return new User(user.getUserName(), user.getPassword(), grantedAuthorities);
         } else {
-            throw new UsernameNotFoundException("admin: " + username + " do not exist!");
+            throw new UsernameNotFoundException("user: " + username + " do not exist!");
         }
     }
 }

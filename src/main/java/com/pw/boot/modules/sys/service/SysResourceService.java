@@ -12,10 +12,16 @@ import java.util.List;
 public interface SysResourceService {
 
     /**
-     * 查询
+     * 查询功能项权限列表
      * @return
      */
-    public List<SysResourceEntity> queryAllList();
+    public List<SysResourceEntity> queryAuthItemList();
+
+    /**
+     * 根据parentId查询子列表
+     * @return
+     */
+    public List<SysResourceEntity> queryListByParentId(long parentId);
 
     /**
      * 根据用户id查找资源
@@ -23,4 +29,11 @@ public interface SysResourceService {
      * @return
      */
     public List<SysResourceEntity> queryListByUserId(long userId);
+
+    /**
+     * 根据用户id查找菜单树
+     * @param userId
+     * @return
+     */
+    public List<SysResourceEntity> queryUserMenus(long userId);
 }

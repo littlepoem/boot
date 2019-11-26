@@ -1,10 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>对账管理系统</title>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/layui-v1.0.7/css/layui.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
 </head>
+<style>
+    .rightmenu {
+        font-size: 15px;
+        font-weight: bolder;
+        border-radius: 2px;
+        background-color: white;
+        padding: 5px 0px 5px 0px;
+        position: absolute;
+        display: none;
+        border: solid 1px #9DB1D4;
+    }
+
+    .rightmenu li {
+        border-width: 5px;
+        line-height: 20px;
+        padding: 10px 30px 10px 25px;
+        cursor: pointer;
+    }
+
+    .rightmenu li:hover {
+        background-color: #69c6c0;
+    }
+
+</style>
 <body>
-    <h1>hello</h1>
+<div class="layui-layout layui-layout-admin" id="layui_layout">
+    <!-- 顶部区域 -->
+    <div class="layui-header header header-demo">
+        <div class="layui-main">
+            <!-- logo区域 -->
+            <div class="admin-logo-box">
+                <!--<a href="#"><img src="statics/images/logo.png"></a>-->
+                <a class="logo" href="javascript:;">对账管理系统</a>
+                <div class="larry-side-menu">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </div>
+                <div style="margin-left: 257px;width: 126px;padding-top: 23px;font-size: 15px;">欢迎 {{user.userName}}
+                </div>
+            </div>
+            <!-- 顶级菜单区域 -->
+            <div class="layui-larry-menu">
+                <!-- <ul class="layui-nav clearfix">
+                        <li class="layui-nav-item">
+                               <a href="javascirpt:;"><i class="iconfont icon-ht_expand"></i>扩展模块</a>
+                        </li>
+                 </ul>-->
+            </div>
+            <!-- 右侧导航 -->
+            <ul class="layui-nav larry-header-item" lay-filter="side">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" @click="updatePassword"><i class="fa fa-lock"></i> &nbsp;修改密码</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="logout"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 左侧侧边导航开始 -->
+    <div class="layui-side layui-side-bg layui-larry-side" id="larry-side">
+        <div class="layui-side-scroll" id="larry-nav-side" lay-filter="side">
+            <!-- 左侧菜单 -->
+            <ul class="layui-nav layui-nav-tree" id="menuTree"></ul>
+        </div>
+    </div>
+
+    <!-- 左侧侧边导航结束 -->
+    <!-- 右侧主体内容 -->
+    <div class="layui-body" id="larry-body" style="bottom: 0;border-left: solid 2px #1AA094;">
+        <div class="layui-tab layui-tab-card larry-tab-box" id="larry-tab" lay-filter="main-tab" lay-allowClose="true">
+            <ul class="layui-tab-title">
+                <li class="layui-this" id="admin-home"><i class="fa fa-home"></i><em>控制台</em></li>
+            </ul>
+            <ul class="rightmenu">
+                <li data-type="closethis">关闭当前</li>
+                <li data-type="closethisleft">关闭当前左侧</li>
+                <li data-type="closethisright">关闭当前右侧</li>
+                <li data-type="closeall">关闭所有</li>
+            </ul>
+            <div class="layui-tab-content" style="min-height: 150px; ">
+                <div class="layui-tab-item layui-show">
+                    <iframe id="mainFrame" class="larry-iframe" data-id='0' src="common/main.html"></iframe>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- 底部区域 -->
+    <div class="layui-footer layui-larry-foot" id="larry-footer">
+        <div class="layui-mian">
+            Copyright &copy; 2019 Amo All Rights Reserved
+        </div>
+    </div>
+
+    <!-- 修改密码 -->
+    <div id="passwordLayer" style="display: none;">
+
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">账号</label>
+                <label class="layui-form-label laber-account">{{user.userName}}</label>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">原密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" v-model="passWord" placeholder="原密码" datatype="*" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">新密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" v-model="newPassWord" placeholder="新密码" datatype="*" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/layui-v1.0.7/layui.js}"></script>
+<script type="text/javascript" th:src="@{/js/vue.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/index1.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/validform/js/Validform_v5.3.2.js}"></script>
 </body>
 </html>

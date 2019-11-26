@@ -1,5 +1,7 @@
 package com.pw.boot.modules.sys.entity;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: hjc
@@ -8,7 +10,7 @@ package com.pw.boot.modules.sys.entity;
 public class SysResourceEntity {
 
     private long resourceId;
-    private String parentId;
+    private long parentId;
     private String name;
     private String url;
     private String icon;
@@ -16,6 +18,8 @@ public class SysResourceEntity {
     private String permission;
     private String remark;
     private String type;
+
+    private List subList;//子列表
 
     public long getResourceId() {
         return resourceId;
@@ -25,11 +29,11 @@ public class SysResourceEntity {
         this.resourceId = resourceId;
     }
 
-    public String getParentId() {
+    public long getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(long parentId) {
         this.parentId = parentId;
     }
 
@@ -87,5 +91,13 @@ public class SysResourceEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List getSubList() {
+        return subList;
+    }
+
+    public void setSubList(List subList) {
+        this.subList = subList;
     }
 }

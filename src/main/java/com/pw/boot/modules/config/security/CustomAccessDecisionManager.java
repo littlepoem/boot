@@ -19,10 +19,16 @@ import java.util.Iterator;
 @Service
 public class CustomAccessDecisionManager implements AccessDecisionManager {
 
-    // decide 方法是判定是否拥有权限的决策方法，
-    //authentication 是CustomUserService中循环添加到 GrantedAuthority 对象中的权限信息集合.
-    //object 包含客户端发起的请求的requset信息，可转换为 HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
-    //configAttributes 为CustomInvocationSecurityMetadataSource的getAttributes(Object object)这个方法返回的结果，此方法是为了判定用户请求的url 是否在权限表中，如果在权限表中，则返回给 decide 方法，用来判定用户是否有此权限。如果不在权限表中则放行。
+
+    /**
+     * CustomFilterInvocationSecurityMetadataSource 放行的请求
+     * decide方法决定该权限是否有权限访问该资源
+     * @param authentication 当前用户的对应权限，如果没登陆就为游客。CustomUserService中循环添加到 GrantedAuthority 对象中的权限信息集合
+     * @param object 资源的地址。客户端发起的请求的requset信息
+     * @param configAttributes 为CustomFilterInvocationSecurityMetadataSource的getAttributes(Object object)这个方法返回的结果
+     * @throws AccessDeniedException
+     * @throws InsufficientAuthenticationException
+     */
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
             throws AccessDeniedException, InsufficientAuthenticationException {
@@ -35,7 +41,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
         for(Iterator<ConfigAttribute> iter = configAttributes.iterator(); iter.hasNext(); ) {
             c = iter.next();
             needRole = c.getAttribute();
-            for(GrantedAuthority ga : authentication.getAuthorities()) {//authentication 为在注释1 中循环添加到 GrantedAuthority 对象中的权限信息集合
+            for(GrantedAuthority ga : authentication.getAuthorities()) {
                 if(needRole.trim().equals(ga.getAuthority())) {
                     return;
                 }

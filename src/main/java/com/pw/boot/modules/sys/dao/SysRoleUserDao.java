@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @create: 2019-06-10
  */
 @Mapper
-public interface SysUserRoleDao {
+public interface SysRoleUserDao {
 }

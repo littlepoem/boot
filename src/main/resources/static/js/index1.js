@@ -1,5 +1,5 @@
 layui.config({
-    base: 'statics/js/'
+    base: 'js/'
 }).use(['navtab'], function () {
     window.jQuery = window.$ = layui.jquery;
     window.layer = layui.layer;
@@ -159,14 +159,13 @@ layui.use(['jquery', 'layer', 'element'], function () {
  */
 function initMenu() {
     var element = layui.element();
-    var clickMenus = ("demo/leave/list");
-    $.getJSON("sys/menu/userMenu?_" + $.now(), function (r) {
+    $.getJSON("menu/userMenus?_" + $.now(), function (r) {
         var menuList = r.menuList;
         var html = "";
         for (var i = 0; i < menuList.length; i++) {
             var menu = menuList[i];
             html += '<li class="layui-nav-item">';
-            if (menu.type == '0') { //目录
+            if (menu.type == '1') { //目录
                 var icon = menu.icon;
                 var name = menu.name;
                 html += '<a href="javascript:;">';
@@ -198,7 +197,7 @@ function initMenu() {
                     }
                 }
             }
-            if (menu.type == '1') {
+            if (menu.type == '2') {
                 var icon = menu.icon;
                 var name = menu.name;
                 var url = menu.url;
@@ -223,52 +222,13 @@ var vm = new Vue({
         newPassWord: '',
         navTitle: "首页",
         myUpcomingCount: "",
-        myNoticeCount: "",
-        zhRsltTotalCount: "",
-        zhRsltUEQCount: "",
-        ptRsltTotalCount: "",
-        ptRsltUEQCount: ""
+        myNoticeCount: ""
     },
     methods: {
         getUser: function () {
-            $.getJSON("sys/user/info?_" + $.now(), function (r) {
+            $.getJSON("user/info?_" + $.now(), function (r) {
                 vm.user = r.user;
-                vm.myUpcomingCount = r.myUpcomingCount;
-                vm.myNoticeCount = r.myNoticeCount;
             });
-        },
-        getCount: function () {
-            $.getJSON("sys/user/getBalCount?_" + $.now(), function (r) {
-                vm.zhRsltTotalCount = r.zhRsltTotalCount;
-                vm.zhRsltUEQCount = r.zhRsltUEQCount;
-                vm.ptRsltTotalCount = r.ptRsltTotalCount;
-                vm.ptRsltUEQCount = r.ptRsltUEQCount;
-            });
-        },
-        zhRslt: function () {
-            var $Upcoming = $("#menuTree a[data-url='sys/balbankbooklog_view.html']");
-            $Upcoming.parent().parent().parent().click();
-            $Upcoming.parent().parent().parent().addClass("layui-nav-itemed");
-            $Upcoming.click();
-        },
-        ptRslt: function () {
-            var url = "sys/balbizcheckrslt.html";
-            var $notice = $("#menuTree a[data-url='" + url + "']");
-            $notice.parent().parent().parent().click();
-            $notice.parent().parent().parent().addClass("layui-nav-itemed");
-            $notice.click();
-        },
-        myUpcoming: function () {
-            var $Upcoming = $("#menuTree a[data-url='act/deal/myUpcoming']");
-            $Upcoming.parent().parent().parent().click();
-            $Upcoming.parent().parent().parent().addClass("layui-nav-itemed");
-            $Upcoming.click();
-        },
-        myNotice: function () {
-            var $notice = $("#menuTree a[data-url='sys/notice/myList']");
-            $notice.parent().parent().parent().click();
-            $notice.parent().parent().parent().addClass("layui-nav-itemed");
-            $notice.click();
         },
         updatePassword: function () {
             layer.open({
@@ -303,6 +263,5 @@ var vm = new Vue({
     },
     created: function () {
         this.getUser();
-        this.getCount();
     }
 });

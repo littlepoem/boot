@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
- * @description:
+ * @description: 认证数据源
  * @author: hjc
  * @create: 2019-08-02
  */
 @Service
-public class CustomInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
+public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     @Autowired
     private SysResourceService sysResourceService;
@@ -33,23 +33,33 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
         map = new HashMap<>();
         Collection<ConfigAttribute> array;
         ConfigAttribute cfg;
-        List<SysResourceEntity> resources = sysResourceService.queryAllList();
+        //加载所有功能项
+        List<SysResourceEntity> resources = sysResourceService.queryAuthItemList();
         for(SysResourceEntity resource : resources) {
             array = new ArrayList<>();
             cfg = new SecurityConfig(resource.getPermission());
             // 此处只添加了用户的名字，其实还可以添加更多权限的信息，
-            // 例如请求方法到ConfigAttribute的集合中去。此处添加的信息将会作为MyAccessDecisionManager类的decide的第三个参数。
+            // 例如请求方法到ConfigAttribute的集合中去。此处添加的信息将会作为CustomAccessDecisionManager类的decide的第三个参数。
             array.add(cfg);
             //用权限的getUrl() 作为map的key，用ConfigAttribute的集合作为 value，
             map.put(resource.getUrl(), array);
         }
-
     }
 
-    //此方法是为了判定用户请求的url 是否在权限表中，如果在权限表中，则返回给 decide 方法，用来判定用户是否有此权限。如果不在权限表中则放行。
+    /**
+     * 获取用户请求的url所需的全部权限
+     * 1、在权限表中，返回给 CustomAccessDecisionManager 处理
+     * 2、不在权限表，放行
+     * @param object
+     * @return
+     * @throws IllegalArgumentException
+     */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-        if(map ==null) loadResourceDefine();
+
+        if(map ==null){
+            loadResourceDefine();
+        }
         //object 中包含用户请求的request 信息
         HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
         AntPathRequestMatcher matcher;

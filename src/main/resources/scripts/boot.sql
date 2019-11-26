@@ -48,7 +48,7 @@ CREATE TABLE `sys_resource` (
   `sort` int(11) COMMENT '排序',
   `permission` varchar(64) COMMENT '权限标识',
   `remark` varchar(255) COMMENT '备注',
-  `type` varchar(32) COMMENT '资源类型',
+  `type` varchar(32) COMMENT '资源类型 0根节点 1目录 2菜单 3功能项',
   PRIMARY KEY (`resource_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源表';
 
