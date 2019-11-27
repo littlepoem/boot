@@ -16,6 +16,12 @@
         <result property="type" column="type"/>
     </resultMap>
 
+    <select id="queryAllList" resultType="com.pw.boot.modules.sys.entity.SysResourceEntity" resultMap="sysResourceMap">
+        select
+            *
+        from sys_resource
+    </select>
+
     <select id="queryAuthItemList" resultType="com.pw.boot.modules.sys.entity.SysResourceEntity" resultMap="sysResourceMap">
         select
             *

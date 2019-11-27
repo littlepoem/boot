@@ -7,6 +7,9 @@ package com.pw.boot.modules.common.constant;
  */
 public class Constants {
 
+
+    public static final String RoleCodeAdmin = "ROLE_ADMIN";
+
     public enum ResultCode {
         /**
          * 成功码

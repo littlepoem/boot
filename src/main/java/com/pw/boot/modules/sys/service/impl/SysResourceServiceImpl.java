@@ -4,6 +4,7 @@ import com.pw.boot.modules.common.constant.Constants;
 import com.pw.boot.modules.sys.dao.SysResourceDao;
 import com.pw.boot.modules.sys.entity.SysResourceEntity;
 import com.pw.boot.modules.sys.service.SysResourceService;
+import com.pw.boot.modules.sys.service.SysRoleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,18 @@ public class SysResourceServiceImpl implements SysResourceService {
 
     @Autowired
     private SysResourceDao sysResourceDao;
+
+    @Autowired
+    private SysRoleUserService sysRoleUserService;
+
+    /**
+     * 查询所有资源列表
+     * @return
+     */
+    public List<SysResourceEntity> queryAllList(){
+
+        return sysResourceDao.queryAllList();
+    }
 
     /**
      * 查询功能项权限列表 type = '3'
@@ -58,8 +71,13 @@ public class SysResourceServiceImpl implements SysResourceService {
     public List<SysResourceEntity> queryUserMenus(long userId){
 
         //用户所有资源项
-        //todo 去除功能项
-        List<SysResourceEntity> menus = queryListByUserId(userId);
+        List<SysResourceEntity> menus = null;
+        boolean isAdmin = sysRoleUserService.hasRole(userId, Constants.RoleCodeAdmin);
+        if(isAdmin){
+            menus = queryAllList();
+        }else {
+            menus = queryListByUserId(userId);
+        }
 
         //取出资源项id
         List<Long> menuIds = menus.stream().map(SysResourceEntity::getResourceId).collect(Collectors.toList());

@@ -174,15 +174,15 @@ function initMenu() {
                 html += '		<em class="layui-nav-more"></em>';
                 html += '</a>';
                 //子菜单
-                var childList = menu.list;
+                var childList = menu.subList;
                 for (var j = 0; j < childList.length; j++) {
                     var childMenu = childList[j];
-                    if (childMenu.type == '1') {
+                    if (childMenu.type == '2') {
                         var icon = childMenu.icon;
                         var name = childMenu.name;
                         var url = childMenu.url;
                         //菜单
-                        if (childMenu.type == '1') {
+                        if (childMenu.type == '2') {
                             html += '<dl class="layui-nav-child">';
                             html += '	<dd>';
                             html += '		<a href="javascript:;" data-url="' + url + '">';
