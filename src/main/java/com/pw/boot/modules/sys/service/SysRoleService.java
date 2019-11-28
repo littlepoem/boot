@@ -1,6 +1,6 @@
 package com.pw.boot.modules.sys.service;
 
-import com.pw.boot.modules.common.util.wrapper.Wrapper;
+import com.pw.boot.modules.common.util.Result;
 import com.pw.boot.modules.sys.entity.SysRoleEntity;
 
 import java.util.List;
@@ -39,12 +39,12 @@ public interface SysRoleService {
      * @param sysRoleEntity
      * @return
      */
-    public Wrapper<Long> save(SysRoleEntity sysRoleEntity);
+    public Result save(SysRoleEntity sysRoleEntity);
 
     /**
      * 更新
      * @param sysRoleEntity
      * @return
      */
-    public Wrapper<String> update(SysRoleEntity sysRoleEntity);
+    public Result update(SysRoleEntity sysRoleEntity);
 }

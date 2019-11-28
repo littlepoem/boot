@@ -16,18 +16,18 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box" id="rrapp" style="margin-top: 12%" v-cloak>
-    <form action="/boot/login" method="post">
+    <form action="/login" method="post">
         <div class="login-box-body">
             <p class="login-box-msg" style="font-size: 25px;font-weight:bold">对账管理系统</p>
             <div v-if="error" class="alert alert-danger alert-dismissible">
                 <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle"></i> {{errorMsg}}</h4>
             </div>
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" name="username" placeholder="账号">
+                <input type="text" class="form-control" name="username" v-model="username" placeholder="账号">
                 <span class="fa fa-user form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" name="password" placeholder="密码">
+                <input type="password" class="form-control" name="password" v-model="password" placeholder="密码">
                 <span class="fa fa-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
@@ -36,7 +36,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <input type="submit" class="btn btn-block btn-success btn-lg" value="登录">
+                    <button type="button" class="btn btn-block btn-success btn-lg" @click="login">登录</button>
                 </div>
             </div>
         </div>
@@ -67,6 +67,24 @@
         methods: {
             refreshCode: function(){
                 this.src = "login/captcha?t=" + $.now();
+            },
+            login: function () {
+                var data = "username="+vm.username+"&password="+vm.password+"&imageCode="+vm.captcha;
+                $.ajax({
+                    type: "POST",
+                    url: "login",
+                    data: data,
+                    dataType: "json",
+                    success: function(result){
+                        if(result.code == 0){//登录成功
+                            window.location.href ='/index';
+                        }else{
+                            vm.error = true;
+                            vm.errorMsg = result.msg;
+                            vm.refreshCode();
+                        }
+                    }
+                });
             }
         }
     });

@@ -1,8 +1,7 @@
 package com.pw.boot.modules.sys.service.impl;
 
+import com.pw.boot.modules.common.util.Result;
 import com.pw.boot.modules.common.util.SequenceUtil;
-import com.pw.boot.modules.common.util.wrapper.WrapMapper;
-import com.pw.boot.modules.common.util.wrapper.Wrapper;
 import com.pw.boot.modules.sys.dao.SysRoleDao;
 import com.pw.boot.modules.sys.entity.SysRoleEntity;
 import com.pw.boot.modules.sys.service.SysRoleService;
@@ -61,7 +60,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * @param sysRoleEntity
      * @return
      */
-    public Wrapper<Long> save(SysRoleEntity sysRoleEntity){
+    public Result save(SysRoleEntity sysRoleEntity){
 
         long roleId = SequenceUtil.nextId();
         sysRoleEntity.setRoleId(roleId);
@@ -69,7 +68,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
         log.info("save result:"+result);
 
-        return WrapMapper.ok(roleId);
+        return Result.ok().put("roleId",roleId);
     }
 
     /**
@@ -77,12 +76,10 @@ public class SysRoleServiceImpl implements SysRoleService {
      * @param sysRoleEntity
      * @return
      */
-    public Wrapper<String> update(SysRoleEntity sysRoleEntity){
+    public Result update(SysRoleEntity sysRoleEntity){
 
         int result = sysRoleDao.update(sysRoleEntity);
 
-        log.info("save result:"+result);
-
-        return WrapMapper.ok("成功");
+        return Result.ok("成功");
     }
 }

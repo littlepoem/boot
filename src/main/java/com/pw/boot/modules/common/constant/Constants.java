@@ -10,6 +10,31 @@ public class Constants {
 
     public static final String RoleCodeAdmin = "ROLE_ADMIN";
 
+    /**
+     * redis key前缀
+     */
+    public enum RedisKey {
+        /**
+         * 图片验证码
+         */
+        imageCode("key_imageCode_"),
+        /**
+         * jwt
+         */
+        jwt("key_jwt_");
+
+        private String value;
+
+        private RedisKey(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+
+
     public enum ResultCode {
         /**
          * 成功码

@@ -1,5 +1,10 @@
 package com.pw.boot.modules.config.security;
 
+import com.pw.boot.modules.config.filter.ImageCodeFilter;
+import com.pw.boot.modules.config.security.handler.CustomAccessDeniedHandler;
+import com.pw.boot.modules.config.security.handler.LoginFailureHandler;
+import com.pw.boot.modules.config.security.handler.LoginSuccessHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @author: hjc
@@ -18,6 +24,7 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
  */
 @Configuration
 @EnableWebSecurity
+@Slf4j
 public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -28,6 +35,16 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomAccessDeniedHandler customAccessDeniedHandler;
+
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
+
+    @Autowired
+    private LoginFailureHandler loginFailureHandler;
+
+    @Autowired
+    private ImageCodeFilter imageCodeFilter;
+
 
 
     /**
@@ -73,13 +90,14 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger/**",
                         "/login/captcha").permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin()
-                    .loginPage("/login").failureUrl("/login?error").permitAll()
-//                    .failureForwardUrl("/?error=true")
-                    .defaultSuccessUrl("/index")
+                .and().formLogin().loginPage("/login").permitAll()
+                    .successHandler(loginSuccessHandler)
+                    .failureHandler(loginFailureHandler)
                 .and().logout().permitAll()
                 .and().exceptionHandling().accessDeniedHandler(customAccessDeniedHandler);
 
+        //添加图片验证码校验过滤器
+        httpSecurity.addFilterBefore(imageCodeFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.addFilterBefore(customFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }
 }

@@ -1,9 +1,16 @@
 server:
   port: 8080
 
+# log4j
 logging:
   level:
-    com.pw.boot: debug
+    com.pw: debug
+
+# jwt
+jwt:
+  header: Authorization
+  secret: amoy.cloud
+  expiration: 1000
 
 spring:
   devtools:
@@ -29,6 +36,6 @@ spring:
 
   redis:
     host: localhost
-    password: 123456
+    password:
     port: 6379
     database: 0

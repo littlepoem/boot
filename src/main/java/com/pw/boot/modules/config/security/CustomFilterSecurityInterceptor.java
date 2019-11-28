@@ -35,21 +35,10 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
         super.setAccessDecisionManager(customAccessDecisionManager);
     }
 
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         FilterInvocation fi = new FilterInvocation(request, response, chain);
-        invoke(fi);
-    }
-
-
-    public void invoke(FilterInvocation fi) throws IOException, ServletException {
 
         //fi里面有一个被拦截的url
         //里面调用CustomFilterInvocationSecurityMetadataSource的getAttributes(Object object)这个方法获取fi对应的所有权限
@@ -61,11 +50,6 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
         } finally {
             super.afterInvocation(token, null);
         }
-    }
-
-    @Override
-    public void destroy() {
-
     }
 
     @Override

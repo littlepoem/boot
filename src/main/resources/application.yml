@@ -1,6 +1,6 @@
-server:
-  servlet:
-    context-path: /boot
+#server:
+#  servlet:
+#    context-path: /boot
 
 spring:
   profiles:
