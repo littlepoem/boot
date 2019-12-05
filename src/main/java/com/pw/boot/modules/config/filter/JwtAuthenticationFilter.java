@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -45,13 +46,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         //获取header中的token信息
-        String authHeader = request.getHeader(tokenHeader);
+        String redisKey = request.getHeader(tokenHeader);
         response.setCharacterEncoding("utf-8");
-        if (null == authHeader){
+        if (null == redisKey){
             filterChain.doFilter(request,response);
             return;
         }
-        String redisKey = authHeader.substring("Bearer ".length());
+//        String redisKey = authHeader.substring("Bearer ".length());
         if (!redisTemplate.hasKey(redisKey)){
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(new Gson().toJson(
@@ -65,7 +66,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         String userName = jwtUtil.parseToken(token);
-        UserDetails userDetails = new User(userName, null, (Set<GrantedAuthority>)jwtUtil.getClaims(token));
+        Map<String,Object> claims = jwtUtil.parseClaims("token");
+        UserDetails userDetails = new User(userName, null, ((Set<GrantedAuthority>)claims.get("authorities")));
 
         //将信息交给security
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());

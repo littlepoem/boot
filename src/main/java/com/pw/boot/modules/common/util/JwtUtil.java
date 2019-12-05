@@ -60,7 +60,7 @@ public class JwtUtil {
      * @param token
      * @return
      */
-    public Map<String,Object> getClaims(String token){
+    public Map<String,Object> parseClaims(String token){
         Map<String,Object> claims = null;
         try {
             claims = getTokenBody(token);
