@@ -1,6 +1,7 @@
 package com.pw.boot.modules.config.security;
 
 import com.pw.boot.modules.config.filter.ImageCodeFilter;
+import com.pw.boot.modules.config.filter.JwtAuthenticationFilter;
 import com.pw.boot.modules.config.security.handler.CustomAccessDeniedHandler;
 import com.pw.boot.modules.config.security.handler.LoginFailureHandler;
 import com.pw.boot.modules.config.security.handler.LoginSuccessHandler;
@@ -45,10 +46,12 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private ImageCodeFilter imageCodeFilter;
 
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
 
     /**
-     * 配置认证服务
+     * 配置认证服务（提供登录验证的实现）
      * @param authenticationManagerBuilder 生成 AuthenticationManager
      * @throws Exception
      */
@@ -96,8 +99,11 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().permitAll()
                 .and().exceptionHandling().accessDeniedHandler(customAccessDeniedHandler);
 
-        //添加图片验证码校验过滤器
+        //图片验证码校验过滤器
         httpSecurity.addFilterBefore(imageCodeFilter, UsernamePasswordAuthenticationFilter.class);
+        //jwt校验过滤器
+        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        //认证拦截器
         httpSecurity.addFilterBefore(customFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }
 }

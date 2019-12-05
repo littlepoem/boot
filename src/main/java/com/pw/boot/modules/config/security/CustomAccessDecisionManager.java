@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * @description:
+ * @description: 资源权限认证器  判断用户是否拥有所请求资源的权限
  * @author: hjc
  * @create: 2019-08-02
  */
@@ -23,9 +23,12 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
     /**
      * CustomFilterInvocationSecurityMetadataSource 放行的请求
      * decide方法决定该权限是否有权限访问该资源
-     * @param authentication 当前用户的对应权限，如果没登陆就为游客。CustomUserService中循环添加到 GrantedAuthority 对象中的权限信息集合
-     * @param object 资源的地址。客户端发起的请求的requset信息
-     * @param configAttributes 为CustomFilterInvocationSecurityMetadataSource的getAttributes(Object object)这个方法返回的结果
+     * @param authentication 当前用户的对应权限。
+     *                       CustomUserService中循环添加到 GrantedAuthority 对象中的权限信息集合
+     * @param object 资源的地址。
+     *               客户端发起的请求的requset信息
+     * @param configAttributes 用户请求的url所需的全部权限
+     *                         CustomFilterInvocationSecurityMetadataSource的getAttributes(Object object)这个方法返回的结果
      * @throws AccessDeniedException
      * @throws InsufficientAuthenticationException
      */

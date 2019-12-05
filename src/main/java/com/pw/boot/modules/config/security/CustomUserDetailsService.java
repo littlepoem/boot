@@ -13,8 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author: hjc
@@ -40,7 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             /**
              * grantedAuthorities 存放用户具备的权限
               */
-            List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
             for (SysResourceEntity resource : resources) {
                 if (resource != null && resource.getPermission()!=null) {
 

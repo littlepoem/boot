@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
- * @description: 认证数据源
+ * @description: 加载资源与权限的对应关系
  * @author: hjc
  * @create: 2019-08-02
  */

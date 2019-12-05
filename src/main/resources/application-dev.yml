@@ -10,7 +10,7 @@ logging:
 jwt:
   header: Authorization
   secret: amoy.cloud
-  expiration: 1000
+  expiration: 3600   #单位:秒
 
 spring:
   devtools:
