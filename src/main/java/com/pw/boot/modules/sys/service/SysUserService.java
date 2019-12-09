@@ -2,6 +2,8 @@ package com.pw.boot.modules.sys.service;
 
 import com.pw.boot.modules.sys.entity.SysUserEntity;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: hjc
@@ -15,4 +17,8 @@ public interface SysUserService {
      * @return
      */
     public SysUserEntity queryByUserName(String userName);
+
+    public SysUserEntity testRedis(String userName);
+
+    public List<SysUserEntity> testRedis2(String userName);
 }

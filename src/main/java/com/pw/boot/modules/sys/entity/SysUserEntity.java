@@ -1,5 +1,6 @@
 package com.pw.boot.modules.sys.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  * @description:
  * @create: 2019-06-06
  */
-public class SysUserEntity {
+public class SysUserEntity implements Serializable {
 
     private long userId;
     private String userName;
